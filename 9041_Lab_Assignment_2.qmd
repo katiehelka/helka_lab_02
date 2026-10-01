@@ -1,0 +1,246 @@
+---
+title: "Helka_Lab_02_9041"
+author: Katelyn Helka
+date: today
+
+---
+
+
+## Loading Packages
+
+```{r}
+#| include: false
+
+library(tidyverse)
+library(psych)
+library(readxl)
+library(gt)
+library(janitor)
+```
+
+# Loading Data
+```{r}
+#| include: false
+
+attachment_df <- read_excel("./Attachment_Anxiety_Data.xlsx")
+
+head(attachment_df)
+```
+
+# Part 2 of Assignment
+## Clean the data:
+```{r}
+#| include: false
+
+# Cleaning the names of the Data so that I can code it properly. This will remove spaces and make everything to a lowercase letter.
+attachment_df_clean <- attachment_df|>
+  clean_names() 
+```
+
+```{r}
+#| include: false
+
+# Cleaning the data to ensure the response variables are all integers and that Gender, Age Group, Relationship Status, and Ethnicity are descriptive rather than the scale response.
+attachment_df_clean <- attachment_df_clean |>
+  mutate(gender = case_when(gender==1 ~ "Male", gender==2 ~"Female", TRUE ~ "NA")) |>
+  mutate(age_group = case_when(age_group == 1 ~ "18-24", age_group == 2 ~ "24-35", age_group == 3 ~ "35-44", age_group == 4 ~ "45-54", age_group == 5 ~ "55-64")) |>
+  mutate(relationship = case_when(relationship == 1 ~ "married", relationship == 2 ~ "in a relationship", relationship == 4 ~ "divorced", relationship == 5 ~ "in a relationship", relationship == 6 ~ "never been in a relationship", relationship == 7 ~ "prefer not to say")) |>
+  mutate(ethnicity = case_when( ethnicity == 1 ~ "white/Caucasian", ethnicity == 2 ~ "Asian/Asian British", ethnicity == 5 ~ "Other ethnic group", ethnicity == 6 ~ "prefer not to say")) |>
+    mutate_at(7:45, as.integer)
+```
+
+## Creating an Answer Key
+```{r}
+#| include: false
+
+answer_key <- list(
+  Social_Interaction_Anxitey_Scale = c("sa_1", "sa_2", "sa_3", "sa_4", "-sa_5", "sa_6", "sa_7", "sa_8", "-sa_9", "sa_10", "-sa_11", "sa_12", "sa_13", "sa_14", "sa_15", "sa_16", "sa_17", "sa_18", "sa_19", "sa_20"),
+   Experiences_in_Close_Relationships_Scale = c("aa_1", "aa_2", "aa_3", "aa_4", "aa_5", "aa_6", "aa_7", "aa_8", "aa_9"),
+  Rosenberg_Self_Esteem_Scale = c("s_est_1", "-s_est_2", "s_est_3", "s_est_4", "-s_est_5", "-s_est_6","s_est_7", "-s_est_8", "-s_est_9", "s_est_10"))
+```
+
+## Cronbach's Alpha and average Scores
+```{r}
+#| include: false
+
+score_social<-scoreItems(answer_key["Social_Interaction_Anxitey_Scale"], attachment_df_clean, totals = F, min=0, max=4)
+
+score_experience<-scoreItems(answer_key["Experiences_in_Close_Relationships_Scale"], attachment_df_clean, totals = F, min=1, max=7)
+
+score_rosenberg<-scoreItems(answer_key["Rosenberg_Self_Esteem_Scale"], attachment_df_clean, totals = F, min=1, max=4)
+
+score_social_df <- as.data.frame(score_social$scores)
+
+score_experience_df <- as.data.frame(score_experience$scores)
+
+score_rosenberg_df <- as.data.frame(score_rosenberg$scores)
+
+all_scores_df <- cbind(score_social_df, score_experience_df, score_rosenberg_df)
+```
+
+## Combine the dataframes
+```{r}
+#| include: false
+
+clean_attachment <- cbind(attachment_df_clean, all_scores_df)
+
+head(clean_attachment)
+```
+## Reduce Dataframe to what I want
+```{r}
+#| include: false
+attachment_final <- clean_attachment |>
+  select("gender", "age_group", "relationship", "ethnicity", "Social_Interaction_Anxitey_Scale", "Experiences_in_Close_Relationships_Scale", "Rosenberg_Self_Esteem_Scale") |>
+  mutate_if(is.numeric, round, 2)
+```
+
+#Part 2
+## Creating a demographic table
+```{r}
+#| include: false
+
+demographic_table <- attachment_final |>
+  tabyl(relationship, age_group)
+
+gttable_1 <- demographic_table |>
+  gt() |>
+  tab_header(
+    title = md("*Distribution of Age Group by Relationship Status*")
+  )
+```
+
+## Creating a Score Summary Table
+```{r}
+#| include: false
+# Capturing Summary Statistics for certain columns
+summary <- describe(select(attachment_final, Social_Interaction_Anxitey_Scale, Experiences_in_Close_Relationships_Scale, Rosenberg_Self_Esteem_Scale))
+summary
+
+# Label sample size 
+n <- (describe(attachment_final))[1,2]
+
+# Creating a Column in the Summary table labelled "Scales"
+Scales <- c("Social_Interaction_Anxitey_Scale", "Experiences_in_Close_Relationships_Scale", "Rosenberg_Self_Esteem_Scale")
+
+summary$Scales<- Scales
+
+# Selecting for only the columns that will appear in the final table
+summary <- summary |>
+    select(Scales, mean, median, sd, range) |>
+       mutate_if(is.numeric, round, 2)
+
+# Combining the three Cronbach's alpha values
+alphas <- round(c(score_social$alpha, score_experience$alpha, score_rosenberg$alpha), 2)
+
+# Combine summary information with alpha values
+final_reptable <- cbind(summary, alphas)
+
+# Create a reproducible table
+gttable_2<- gt(final_reptable) |>
+    tab_header(
+        title = md("*Descriptive Statistics for Attachment Anxitey in Adults*")) |>
+    tab_stubhead(label= "Composites")|>
+    tab_spanner(
+        label="Central Tendency",
+        columns = c(mean, median)
+    )|>
+        tab_spanner(
+        label="Variability",
+        columns = c(sd, range)
+        )|>
+            tab_spanner(
+        label = "Reliability Values (Chronbach's alpha)",
+    columns = "alphas"
+            ) 
+```
+
+### Filtered Score Table
+```{r}
+#| include: false
+attachment_filter <- attachment_final |>
+    filter(age_group == "24-35")
+```
+
+### Creating the Filtered Score Table
+```{r}
+#| include: false
+# Capturing Summary Statistics for certain columns
+summary_filter <- describe(select(attachment_filter, Social_Interaction_Anxitey_Scale, Experiences_in_Close_Relationships_Scale, Rosenberg_Self_Esteem_Scale))
+summary_filter
+
+# Label sample size 
+
+n_filter <- (describe(attachment_filter))[1,2]
+
+# Creating a Column in the Summary table labelled "Scales"
+Scales_filter <- c("Social_Interaction_Anxitey_Scale", "Experiences_in_Close_Relationships_Scale", "Rosenberg_Self_Esteem_Scale")
+
+summary_filter$Scales<- Scales_filter 
+
+# Selecting for only the columns that will appear in the final table
+summary_filter <- summary_filter |>
+    select(Scales, mean, median, sd, range) |>
+       mutate_if(is.numeric, round, 2)
+
+# Combining the three Cronbach's alpha values
+alphas_filter <- round(c(score_social$alpha, score_experience$alpha, score_rosenberg$alpha), 2)
+
+# Combine summary information with alpha values
+filter_reptable <- cbind(summary_filter, alphas_filter)
+
+# Create a reproducible table
+gttable_3<- gt(filter_reptable) |>
+    tab_header(
+        title = md("*Descriptive Statistics for Attachment Anxitey in Adults ages 24-35*")) |>
+    tab_stubhead(label= "Composites")|>
+    tab_spanner(
+        label="Central Tendency",
+        columns = c(mean, median)
+    )|>
+        tab_spanner(
+        label="Variability",
+        columns = c(sd, range)
+        )|>
+            tab_spanner(
+        label = "Reliability Values (Chronbach's alpha)",
+    columns = "alphas_filter"
+            ) 
+```
+
+# Intro
+## Participants
+The sample consisted of `{r} n` adults
+
+`{r} gttable_1`
+
+
+## Measures
+The following scales were used: 
+
+The Social Interaction Anxiety Scale, with a Cronbach's alpha of 
+`{r} round(score_social$alpha, 2)`, 
+
+The Experiences in Close Relationships Scale, with an alpha of `{r} round(score_experience$alpha, 2)`, 
+
+The Rosenberg Self-Esteem Scale had an alpha of `{r} round(score_rosenberg$alpha, 2)`.
+
+## Data Analysis Strategy
+Items marked with a leading minus sign in the answer key (e.g., `-sa_5`) 
+were reverse-keyed before scoring.All items included: 
+Items 5, 9, and 11 from the Social Interaction Anxitey Scale and Items 2, 5, 6, 8, and 9 in the Rosenberg Self-Esteem Scale. 
+
+## Results
+
+`{r} gttable_2`
+
+Across the full sample, the mean Social Interaction Anxiety score was 
+`{r} final_reptable$mean[1]`, the mean Experiences in Close Relationships 
+score was `{r} final_reptable$mean[2]`, and the mean Rosenberg Self-Esteem 
+score was `{r} final_reptable$mean[3]`.
+
+`{r} gttable_3`
+
+Among participants aged 24–35, the mean Social Interaction Anxiety score was 
+`{r} filter_reptable$mean[1]`, the mean Experiences in Close Relationships 
+score was `{r} filter_reptable$mean[2]`, and the mean Rosenberg Self-Esteem 
+score was `{r} filter_reptable$mean[3]`.
