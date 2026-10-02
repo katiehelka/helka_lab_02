@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html#clean-the-data",
+    "href": "index.html#clean-the-data",
+    "title": "Helka_Lab_02_9041",
+    "section": "Clean the data:",
+    "text": "Clean the data:"
+  },
+  {
+    "objectID": "index.html#creating-an-answer-key",
+    "href": "index.html#creating-an-answer-key",
+    "title": "Helka_Lab_02_9041",
+    "section": "Creating an Answer Key",
+    "text": "Creating an Answer Key"
+  },
+  {
+    "objectID": "index.html#cronbachs-alpha-and-average-scores",
+    "href": "index.html#cronbachs-alpha-and-average-scores",
+    "title": "Helka_Lab_02_9041",
+    "section": "Cronbach’s Alpha and average Scores",
+    "text": "Cronbach’s Alpha and average Scores"
+  },
+  {
+    "objectID": "index.html#combine-the-dataframes",
+    "href": "index.html#combine-the-dataframes",
+    "title": "Helka_Lab_02_9041",
+    "section": "Combine the dataframes",
+    "text": "Combine the dataframes"
+  },
+  {
+    "objectID": "index.html#reduce-dataframe-to-what-i-want",
+    "href": "index.html#reduce-dataframe-to-what-i-want",
+    "title": "Helka_Lab_02_9041",
+    "section": "Reduce Dataframe to what I want",
+    "text": "Reduce Dataframe to what I want\n#Part 2 ## Creating a demographic table"
+  },
+  {
+    "objectID": "index.html#creating-a-score-summary-table",
+    "href": "index.html#creating-a-score-summary-table",
+    "title": "Helka_Lab_02_9041",
+    "section": "Creating a Score Summary Table",
+    "text": "Creating a Score Summary Table\n\nFiltered Score Table\n\n\nCreating the Filtered Score Table"
+  },
+  {
+    "objectID": "index.html#participants",
+    "href": "index.html#participants",
+    "title": "Helka_Lab_02_9041",
+    "section": "Participants",
+    "text": "Participants\nThe sample consisted of 63 adults\n\n\n\n\n\n\nDistribution of Age Group by Relationship Status\n\n\nrelationship\n18-24\n24-35\n35-44\n45-54\n55-64\n\n\n\n\ndivorced\n0\n0\n0\n0\n1\n\n\nin a relationship\n40\n11\n2\n0\n1\n\n\nmarried\n1\n0\n1\n1\n1\n\n\nnever been in a relationship\n0\n1\n0\n0\n0\n\n\nprefer not to say\n3\n0\n0\n0\n0"
+  },
+  {
+    "objectID": "index.html#measures",
+    "href": "index.html#measures",
+    "title": "Helka_Lab_02_9041",
+    "section": "Measures",
+    "text": "Measures\nThe following scales were used:\nThe Social Interaction Anxiety Scale, with a Cronbach’s alpha of 0.9,\nThe Experiences in Close Relationships Scale, with an alpha of 0.94,\nThe Rosenberg Self-Esteem Scale had an alpha of 0.85."
+  },
+  {
+    "objectID": "index.html#data-analysis-strategy",
+    "href": "index.html#data-analysis-strategy",
+    "title": "Helka_Lab_02_9041",
+    "section": "Data Analysis Strategy",
+    "text": "Data Analysis Strategy\nItems marked with a leading minus sign in the answer key (e.g., -sa_5) were reverse-keyed before scoring.All items included: Items 5, 9, and 11 from the Social Interaction Anxitey Scale and Items 2, 5, 6, 8, and 9 in the Rosenberg Self-Esteem Scale."
+  },
+  {
+    "objectID": "index.html#results",
+    "href": "index.html#results",
+    "title": "Helka_Lab_02_9041",
+    "section": "Results",
+    "text": "Results\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDescriptive Statistics for Attachment Anxitey in Adults\n\n\nScales\n\nCentral Tendency\n\n\nVariability\n\n\nReliability Values (Chronbach's alpha)\n\n\n\nmean\nmedian\nsd\nrange\nalphas\n\n\n\n\nSocial_Interaction_Anxitey_Scale\n2.39\n2.30\n0.70\n3.00\n0.90\n\n\nExperiences_in_Close_Relationships_Scale\n3.40\n3.11\n1.62\n5.89\n0.94\n\n\nRosenberg_Self_Esteem_Scale\n2.23\n2.20\n0.51\n2.20\n0.85\n\n\n\n\n\nAcross the full sample, the mean Social Interaction Anxiety score was 2.39, the mean Experiences in Close Relationships score was 3.4, and the mean Rosenberg Self-Esteem score was 2.23.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDescriptive Statistics for Attachment Anxitey in Adults ages 24-35\n\n\nScales\n\nCentral Tendency\n\n\nVariability\n\n\nReliability Values (Chronbach's alpha)\n\n\n\nmean\nmedian\nsd\nrange\nalphas_filter\n\n\n\n\nSocial_Interaction_Anxitey_Scale\n2.55\n2.67\n0.49\n1.45\n0.90\n\n\nExperiences_in_Close_Relationships_Scale\n3.52\n3.05\n1.80\n5.33\n0.94\n\n\nRosenberg_Self_Esteem_Scale\n2.17\n2.15\n0.48\n1.70\n0.85\n\n\n\n\n\nAmong participants aged 24–35, the mean Social Interaction Anxiety score was 2.55, the mean Experiences in Close Relationships score was 3.52, and the mean Rosenberg Self-Esteem score was 2.17."
+  }
+]

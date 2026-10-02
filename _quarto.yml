@@ -1,5 +1,13 @@
 project:
+  type: website
+  output-dir: docs
+
+website:
   title: "9041 Lab Assignment 2"
 
-editor: visual
+format:
+  html:
+    theme: cosmo
+    toc: true
 
+editor: visual
